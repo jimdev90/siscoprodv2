@@ -13,7 +13,8 @@ return [
          * `Spatie\Permission\Contracts\Permission` contract.
          */
 
-        'permission' => Spatie\Permission\Models\Permission::class,
+//        'permission' => Spatie\Permission\Models\Permission::class,
+        'permission' => \App\Models\Permission::class,
 
         /*
          * When using the "HasRoles" trait from this package, we need to know which
@@ -24,7 +25,8 @@ return [
          * `Spatie\Permission\Contracts\Role` contract.
          */
 
-        'role' => Spatie\Permission\Models\Role::class,
+//        'role' => Spatie\Permission\Models\Role::class,
+        'role' => \App\Models\Role::class,
 
     ],
 
@@ -37,6 +39,7 @@ return [
          */
 
         'roles' => 'roles',
+//        'roles' => env('DB_DATABASE').'roles',
 
         /*
          * When using the "HasPermissions" trait from this package, we need to know which
@@ -45,6 +48,7 @@ return [
          */
 
         'permissions' => 'permissions',
+//        'permissions' => env('DB_DATABASE').'permissions',
 
         /*
          * When using the "HasPermissions" trait from this package, we need to know which
@@ -53,6 +57,7 @@ return [
          */
 
         'model_has_permissions' => 'model_has_permissions',
+//        'model_has_permissions' => env('DB_DATABASE').'model_has_permissions',
 
         /*
          * When using the "HasRoles" trait from this package, we need to know which
@@ -61,6 +66,7 @@ return [
          */
 
         'model_has_roles' => 'model_has_roles',
+//        'model_has_roles' => env('DB_DATABASE').'model_has_roles',
 
         /*
          * When using the "HasRoles" trait from this package, we need to know which
@@ -69,6 +75,7 @@ return [
          */
 
         'role_has_permissions' => 'role_has_permissions',
+//        'role_has_permissions' => env('DB_DATABASE').'role_has_permissions',
     ],
 
     'column_names' => [

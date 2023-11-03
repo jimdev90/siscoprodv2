@@ -7,6 +7,7 @@ use App\Enums\UserStatusType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ActivateUserRequest;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Saga\BasicPersonal;
 use App\Models\Saga\PersonalBasica;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -37,29 +38,23 @@ class LoginCustomController extends Controller
 
     public function activateUser(ActivateUserRequest $request)
     {
-//        $request->validate([
-//            'correo_institucional' => ['required', 'email', 'unique:personal_basica'],
-//        ]);
-//        DB::beginTransaction();
-//        try {
-//
-//            $user = PersonalBasica::where('cip', $request->cip)->first()->update([
-//                'correo_institucional' => $request->correo_institucional,
-//                'celular_personal' => $request->celular_personal
-//            ]);
-//
-//            dd($user);
-//
-//            DB::table('model_has_roles')->insert(['role_id' => 6, 'model_type' => 'App\Models\User', 'model_id' => $user->cip]);
-//
-//            DB::commit();
-//
-//        } catch (\Exception $exception) {
-//            DB::rollBack();
-//            return $this->errorResponse('Error de servidor, comunicate con los administradores del sistema', '500');
-//        }
-//
-//        return $this->showOne($user, 201);
+
+        DB::beginTransaction();
+        try {
+
+            $user = BasicPersonal::select('cip', 'correo_institucional', 'celular_personal')->where('cip', $request->cip)->firstOrFail();
+            $user->correo_institucional = $request->correo_institucional;
+            $user->celular_personal = $request->celular_personal;
+            $user->save();
+            DB::table('model_has_roles')->insert(['role_id' => 6, 'model_type' => 'App\Models\User', 'model_id' => $user->cip]);
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return $this->errorResponse('Error de servidor, comunicate con los administradores del sistema', '500');
+        }
+
+        return $this->showOne($user, 201);
     }
 
     public function logout(Request $request)

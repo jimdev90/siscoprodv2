@@ -4,162 +4,162 @@
             <div class="header-menu-wrapper header-menu-wrapper-left" id="kt_header_menu_wrapper">
                 <div id="kt_header_menu" class="header-menu header-menu-mobile header-menu-layout-default">
                     <ul class="menu-nav">
-                        <li class="menu-item menu-item-submenu menu-item-rel">
-                            <a href="{{ route('dashboard') }}" class="menu-link">
-                                <span class="menu-text">Dashboard</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                        </li>
-                        <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click"
-                            aria-haspopup="true">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <span class="menu-text">Proyectos</span>
-                                <span class="menu-desc"></span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="menu-submenu menu-submenu-classic menu-submenu-left">
-                                <ul class="menu-subnav">
-                                    <li class="menu-item" aria-haspopup="true">
-                                        <a href="{{ route('proyectos.create') }}" class="menu-link">
-                                           <span class="svg-icon menu-icon">
-                                                  <i class="fa flaticon-edit-1"></i>
-                                           </span>
-                                            <span class="menu-text"> Nuevo</span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item" aria-haspopup="true">
-                                        <a href="{{ route('proyectos.registered') }}" class="menu-link">
-                                           <span class="svg-icon menu-icon">
-                                                  <i class="fa fa-th-list"></i>
-                                           </span>
-                                            <span class="menu-text"> Registrados</span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item" aria-haspopup="true">
-                                        <a href="{{ route('proyectos.assigned') }}" class="menu-link">
-                                          <span class="svg-icon menu-icon">
-                                              <i class="fa fa-list-alt"></i>
-                                          </span>
-                                            <span class="menu-text"> Asignados</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="menu-item menu-item-submenu menu-item-rel">
-                            <a href="{{ route('entregables.assigned') }}" class="menu-link">
-                                <span class="menu-text">Entregables</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                        </li>
-                        <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click"
-                            aria-haspopup="true">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <span class="menu-text">Actividades</span>
-                                <span class="menu-desc"></span>
-                                <i class="menu-arrow"></i>
-                                </a>
-                                <div class="menu-submenu menu-submenu-classic menu-submenu-left">
-                                <ul class="menu-subnav">
-                                    <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                                        <a href="javascript:;" class="menu-link menu-toggle">
-                                            <span class="svg-icon menu-icon">
-                                                  <i class="fa flaticon-edit-1"></i>
-                                            </span>
-                                            <span class="menu-text">Nuevo</span>
-                                            <i class="menu-arrow"></i>
-                                        </a>
-                                        <div class="menu-submenu menu-submenu-classic menu-submenu-right" data-hor-direction="menu-submenu-right">
-                                            <ul class="menu-subnav">
-                                                <li class="menu-item" aria-haspopup="true">
-                                                    <a href="{{ route('actividades.create') }}" class="menu-link">
-                                                        <i class="menu-bullet menu-bullet-dot">
-                                                            <span></span>
-                                                        </i>
-                                                        <span class="menu-text">Actividad Efectivo</span>
-                                                    </a>
-                                                </li>
-                                                <li class="menu-item" aria-haspopup="true">
-                                                    <a href="{{ route('actividades-secretaria.create') }}" class="menu-link">
-                                                        <i class="menu-bullet menu-bullet-dot">
-                                                            <span></span>
-                                                        </i>
-                                                        <span class="menu-text">Actividad Secretaría</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                                        <a href="javascript:;" class="menu-link menu-toggle">
-                                            <span class="svg-icon menu-icon">
-                                                  <i class="fa fa-th-list"></i>
-                                            </span>
-                                            <span class="menu-text">Bandeja</span>
-                                            <i class="menu-arrow"></i>
-                                        </a>
-                                        <div class="menu-submenu menu-submenu-classic menu-submenu-right" data-hor-direction="menu-submenu-right">
-                                            <ul class="menu-subnav">
-                                                <li class="menu-item" aria-haspopup="true">
-                                                    <a href="{{ route('actividades.index') }}" class="menu-link">
-                                                        <i class="menu-bullet menu-bullet-dot">
-                                                            <span></span>
-                                                        </i>
-                                                        <span class="menu-text">Actividad Efectivo</span>
-                                                    </a>
-                                                </li>
-                                                <li class="menu-item" aria-haspopup="true">
-                                                    <a href="{{ route('actividades-secretaria.index') }}" class="menu-link">
-                                                        <i class="menu-bullet menu-bullet-dot">
-                                                            <span></span>
-                                                        </i>
-                                                        <span class="menu-text">Actividad Secretaría</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        @if(auth()->user()->isAdministrator())
-                            <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click"
-                            aria-haspopup="true">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <span class="menu-text">Mantenimiento</span>
-                                <span class="menu-desc"></span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="menu-submenu menu-submenu-classic menu-submenu-left">
-                                <ul class="menu-subnav">
-                                    <li class="menu-item" aria-haspopup="true">
-                                        <a href="{{ route('admin.usuarios.index') }}" class="menu-link">
-                                           <span class="svg-icon menu-icon">
-                                                  <i class="fa fa-users"></i>
-                                           </span>
-                                            <span class="menu-text"> Usuarios</span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item" aria-haspopup="true">
-                                        <a href="{{ route('admin.categoria-actividad.index') }}" class="menu-link">
-                                           <span class="svg-icon menu-icon">
-                                                  <i class="fa fa-th-list"></i>
-                                           </span>
-                                            <span class="menu-text"> Categorías</span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item" aria-haspopup="true">
-                                        <a href="{{ route('admin.subcategoria-actividad.index') }}" class="menu-link">
-                                           <span class="svg-icon menu-icon">
-                                                  <i class="fa fa-th-list"></i>
-                                           </span>
-                                            <span class="menu-text"> Subcategorías</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        @endif
+{{--                        <li class="menu-item menu-item-submenu menu-item-rel">--}}
+{{--                            <a href="{{ route('dashboard') }}" class="menu-link">--}}
+{{--                                <span class="menu-text">Dashboard</span>--}}
+{{--                                <i class="menu-arrow"></i>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click"--}}
+{{--                            aria-haspopup="true">--}}
+{{--                            <a href="javascript:;" class="menu-link menu-toggle">--}}
+{{--                                <span class="menu-text">Proyectos</span>--}}
+{{--                                <span class="menu-desc"></span>--}}
+{{--                                <i class="menu-arrow"></i>--}}
+{{--                            </a>--}}
+{{--                            <div class="menu-submenu menu-submenu-classic menu-submenu-left">--}}
+{{--                                <ul class="menu-subnav">--}}
+{{--                                    <li class="menu-item" aria-haspopup="true">--}}
+{{--                                        <a href="{{ route('proyectos.create') }}" class="menu-link">--}}
+{{--                                           <span class="svg-icon menu-icon">--}}
+{{--                                                  <i class="fa flaticon-edit-1"></i>--}}
+{{--                                           </span>--}}
+{{--                                            <span class="menu-text"> Nuevo</span>--}}
+{{--                                        </a>--}}
+{{--                                    </li>--}}
+{{--                                    <li class="menu-item" aria-haspopup="true">--}}
+{{--                                        <a href="{{ route('proyectos.registered') }}" class="menu-link">--}}
+{{--                                           <span class="svg-icon menu-icon">--}}
+{{--                                                  <i class="fa fa-th-list"></i>--}}
+{{--                                           </span>--}}
+{{--                                            <span class="menu-text"> Registrados</span>--}}
+{{--                                        </a>--}}
+{{--                                    </li>--}}
+{{--                                    <li class="menu-item" aria-haspopup="true">--}}
+{{--                                        <a href="{{ route('proyectos.assigned') }}" class="menu-link">--}}
+{{--                                          <span class="svg-icon menu-icon">--}}
+{{--                                              <i class="fa fa-list-alt"></i>--}}
+{{--                                          </span>--}}
+{{--                                            <span class="menu-text"> Asignados</span>--}}
+{{--                                        </a>--}}
+{{--                                    </li>--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
+{{--                        </li>--}}
+{{--                        <li class="menu-item menu-item-submenu menu-item-rel">--}}
+{{--                            <a href="{{ route('entregables.assigned') }}" class="menu-link">--}}
+{{--                                <span class="menu-text">Entregables</span>--}}
+{{--                                <i class="menu-arrow"></i>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click"--}}
+{{--                            aria-haspopup="true">--}}
+{{--                            <a href="javascript:;" class="menu-link menu-toggle">--}}
+{{--                                <span class="menu-text">Actividades</span>--}}
+{{--                                <span class="menu-desc"></span>--}}
+{{--                                <i class="menu-arrow"></i>--}}
+{{--                                </a>--}}
+{{--                                <div class="menu-submenu menu-submenu-classic menu-submenu-left">--}}
+{{--                                <ul class="menu-subnav">--}}
+{{--                                    <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">--}}
+{{--                                        <a href="javascript:;" class="menu-link menu-toggle">--}}
+{{--                                            <span class="svg-icon menu-icon">--}}
+{{--                                                  <i class="fa flaticon-edit-1"></i>--}}
+{{--                                            </span>--}}
+{{--                                            <span class="menu-text">Nuevo</span>--}}
+{{--                                            <i class="menu-arrow"></i>--}}
+{{--                                        </a>--}}
+{{--                                        <div class="menu-submenu menu-submenu-classic menu-submenu-right" data-hor-direction="menu-submenu-right">--}}
+{{--                                            <ul class="menu-subnav">--}}
+{{--                                                <li class="menu-item" aria-haspopup="true">--}}
+{{--                                                    <a href="{{ route('actividades.create') }}" class="menu-link">--}}
+{{--                                                        <i class="menu-bullet menu-bullet-dot">--}}
+{{--                                                            <span></span>--}}
+{{--                                                        </i>--}}
+{{--                                                        <span class="menu-text">Actividad Efectivo</span>--}}
+{{--                                                    </a>--}}
+{{--                                                </li>--}}
+{{--                                                <li class="menu-item" aria-haspopup="true">--}}
+{{--                                                    <a href="{{ route('actividades-secretaria.create') }}" class="menu-link">--}}
+{{--                                                        <i class="menu-bullet menu-bullet-dot">--}}
+{{--                                                            <span></span>--}}
+{{--                                                        </i>--}}
+{{--                                                        <span class="menu-text">Actividad Secretaría</span>--}}
+{{--                                                    </a>--}}
+{{--                                                </li>--}}
+{{--                                            </ul>--}}
+{{--                                        </div>--}}
+{{--                                    </li>--}}
+{{--                                    <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">--}}
+{{--                                        <a href="javascript:;" class="menu-link menu-toggle">--}}
+{{--                                            <span class="svg-icon menu-icon">--}}
+{{--                                                  <i class="fa fa-th-list"></i>--}}
+{{--                                            </span>--}}
+{{--                                            <span class="menu-text">Bandeja</span>--}}
+{{--                                            <i class="menu-arrow"></i>--}}
+{{--                                        </a>--}}
+{{--                                        <div class="menu-submenu menu-submenu-classic menu-submenu-right" data-hor-direction="menu-submenu-right">--}}
+{{--                                            <ul class="menu-subnav">--}}
+{{--                                                <li class="menu-item" aria-haspopup="true">--}}
+{{--                                                    <a href="{{ route('actividades.index') }}" class="menu-link">--}}
+{{--                                                        <i class="menu-bullet menu-bullet-dot">--}}
+{{--                                                            <span></span>--}}
+{{--                                                        </i>--}}
+{{--                                                        <span class="menu-text">Actividad Efectivo</span>--}}
+{{--                                                    </a>--}}
+{{--                                                </li>--}}
+{{--                                                <li class="menu-item" aria-haspopup="true">--}}
+{{--                                                    <a href="{{ route('actividades-secretaria.index') }}" class="menu-link">--}}
+{{--                                                        <i class="menu-bullet menu-bullet-dot">--}}
+{{--                                                            <span></span>--}}
+{{--                                                        </i>--}}
+{{--                                                        <span class="menu-text">Actividad Secretaría</span>--}}
+{{--                                                    </a>--}}
+{{--                                                </li>--}}
+{{--                                            </ul>--}}
+{{--                                        </div>--}}
+{{--                                    </li>--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
+{{--                        </li>--}}
+{{--                        @if(auth()->user()->isAdministrator())--}}
+{{--                            <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click"--}}
+{{--                            aria-haspopup="true">--}}
+{{--                            <a href="javascript:;" class="menu-link menu-toggle">--}}
+{{--                                <span class="menu-text">Mantenimiento</span>--}}
+{{--                                <span class="menu-desc"></span>--}}
+{{--                                <i class="menu-arrow"></i>--}}
+{{--                            </a>--}}
+{{--                            <div class="menu-submenu menu-submenu-classic menu-submenu-left">--}}
+{{--                                <ul class="menu-subnav">--}}
+{{--                                    <li class="menu-item" aria-haspopup="true">--}}
+{{--                                        <a href="{{ route('admin.usuarios.index') }}" class="menu-link">--}}
+{{--                                           <span class="svg-icon menu-icon">--}}
+{{--                                                  <i class="fa fa-users"></i>--}}
+{{--                                           </span>--}}
+{{--                                            <span class="menu-text"> Usuarios</span>--}}
+{{--                                        </a>--}}
+{{--                                    </li>--}}
+{{--                                    <li class="menu-item" aria-haspopup="true">--}}
+{{--                                        <a href="{{ route('admin.categoria-actividad.index') }}" class="menu-link">--}}
+{{--                                           <span class="svg-icon menu-icon">--}}
+{{--                                                  <i class="fa fa-th-list"></i>--}}
+{{--                                           </span>--}}
+{{--                                            <span class="menu-text"> Categorías</span>--}}
+{{--                                        </a>--}}
+{{--                                    </li>--}}
+{{--                                    <li class="menu-item" aria-haspopup="true">--}}
+{{--                                        <a href="{{ route('admin.subcategoria-actividad.index') }}" class="menu-link">--}}
+{{--                                           <span class="svg-icon menu-icon">--}}
+{{--                                                  <i class="fa fa-th-list"></i>--}}
+{{--                                           </span>--}}
+{{--                                            <span class="menu-text"> Subcategorías</span>--}}
+{{--                                        </a>--}}
+{{--                                    </li>--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
+{{--                        </li>--}}
+{{--                        @endif--}}
                     </ul>
                 </div>
             </div>

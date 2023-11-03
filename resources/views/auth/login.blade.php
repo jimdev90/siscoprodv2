@@ -13,6 +13,9 @@
                 <label for="login" class="font-size-h6 font-weight-bolder text-dark">Usuario | Nro. CIP</label>
                 <input id="login" class="form-control form-control-solid h-auto py-7 px-6 rounded-lg" type="text" name="login"
                        autocomplete="off" value="{{ old('login') }}"/>
+                @error('login')
+                <p class="text-danger font-weight-bold mt-1">{{ $message }}</p>
+                @enderror
             </div>
             <div class="form-group">
                 <div class="d-flex justify-content-between mt-n5">
@@ -20,6 +23,9 @@
                 </div>
                 <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg" type="password"
                        name="password" autocomplete="off" id="password"/>
+                @error('password')
+                <p class="text-danger font-weight-bold mt-1">{{ $message }}</p>
+                @enderror
             </div>
             <div class="text-center pt-2">
                 <button type="submit" class="btn btn-dark font-weight-bolder font-size-h6 px-8 py-4 my-3">Ingresar

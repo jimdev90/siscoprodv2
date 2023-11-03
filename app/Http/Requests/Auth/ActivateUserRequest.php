@@ -25,9 +25,22 @@ class ActivateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'correo_institucional' => ['required', 'email', 'unique:mysql_saga.personal_basica'],
-            'celular_personal' => ['required', 'unique:mysql_saga.personal_basica'],
-            'cip' => ['required', Rule::exists('mysql_saga.personal_basica', 'cip')],
+            'correo_institucional' => ['required', 'email', Rule::unique('mysql_saga.personal_basica')->ignore($this->correo_institucional, 'correo_institucional')],
+            'celular_personal' => ['required', Rule::unique('mysql_saga.personal_basica')->ignore($this->celular_personal, 'celular_personal')],
+            'cip' => ['required', 'numeric', 'digits_between:6,8', Rule::exists('mysql_saga.personal_basica', 'cip')],
+            'unidad' => ['required'],
+            'nombre_completo' => ['required'],
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'correo_institucional' => 'correo institucional',
+            'celular_personal' => 'número de celular',
+            'cip' => 'número de CIP',
+            'unidad' => 'nombre de la unidad',
+            'nombre_completo' => 'nombre completo',
         ];
     }
 }

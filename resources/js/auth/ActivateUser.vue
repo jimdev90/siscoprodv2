@@ -43,7 +43,7 @@
                        type="text"
                        autocomplete="off"
                        v-model="dataEfectivo.nombre_completo"
-                       readonly
+
                 />
             </div>
 
@@ -51,10 +51,10 @@
                 <label for="data-cip">Nro. Cip</label>
                 <input id="data-cip"
                        :class="`form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6 ${searchStatus ? 'bg-success-o-30' : ''}`"
-                       type="text"
+                       type="number"
                        autocomplete="off"
                        v-model="dataEfectivo.cip"
-                       readonly/>
+                       />
             </div>
 
             <div class="form-group">
@@ -64,7 +64,7 @@
                        type="text"
                        autocomplete="off"
                        v-model="dataEfectivo.unidad"
-                       readonly/>
+                       />
             </div>
 
             <div class="form-group">
@@ -80,7 +80,7 @@
             <div class="form-group">
                 <label for="data-celular">Número de celular</label>
                 <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
-                       type="text"
+                       type="tel"
                        placeholder="Numero de celular"
                        v-model="dataEfectivo.celular_personal"
                 />
@@ -90,7 +90,7 @@
             <div class="form-group d-flex flex-wrap flex-center pb-lg-0 pb-3">
                 <button type="submit" id="kt_login_signup_submit"
                         class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mx-4"
-                >Finalizar
+                >Activar usuario
                 </button>
                 <a type="button" id="kt_login_signup_cancel"
                    class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mx-4"
@@ -105,7 +105,7 @@
 
 <script>
 import MessageError from "../components/MessageError.vue";
-import api from "../service";
+import { routesApi, routesApp } from "../service";
 export default {
     name: 'ActivateUser',
     components: {MessageError},
@@ -130,7 +130,7 @@ export default {
         async searchPersonal() {
             let me = this;
             try {
-                const response = await api(HOST_URL).get(`/search-personal`, { params: { cip: me.cip } });
+                const response = await routesApi(HOST_URL).get(`/search-personal`, { params: { cip: me.cip } });
                 if (Object.entries(response).length !== 0){
                     me.searchStatus = true;
                     me.cip = '';
@@ -171,14 +171,33 @@ export default {
         async activateUser() {
             let me = this;
             try {
-
+                const response = await routesApp(HOST_URL).put(`/activar-usuario`, me.dataEfectivo)
+                console.table({response});
+                if (Object.entries(response).length !== 0){
+                    const message = `Usuario activado exitosamente. Ingrese sus credenciales para acceder al sistema`;
+                    swal.fire({
+                        text: `${message}`,
+                        icon: "success",
+                        buttonsStyling: true,
+                        confirmButtonText: "Ok!",
+                        customClass: {
+                            confirmButton: "btn font-weight-bold btn-light-primary"
+                        }
+                    }).then(function () {
+                        window.location.href = `${HOST_URL}/`;
+                    });
+                }
             }catch (e) {
+                console.log(e.response)
                 if (Object.entries(e.response).length !== 0){
                     const {status, data} = e.response;
                     if (status === 422){
-                        const {errors: {correo_institucional, celular_personal}} = data;
-                        toastr.error(`${correo_institucional[0]}`, 'Lo sentimos!')
-                        toastr.error(`${celular_personal[0]}`, 'Lo sentimos!')
+                        const {errors: {correo_institucional, celular_personal, cip, unidad, nombre_completo}} = data;
+                        if (cip) toastr.error(`${cip[0]}`, 'Lo sentimos!');
+                        if (correo_institucional) toastr.error(`${correo_institucional[0]}`, 'Lo sentimos!');
+                        if (celular_personal) toastr.error(`${celular_personal[0]}`, 'Lo sentimos!');
+                        if (unidad) toastr.error(`${unidad[0]}`, 'Lo sentimos!');
+                        if (nombre_completo) toastr.error(`${nombre_completo[0]}`, 'Lo sentimos!');
                         $('#form-iniciar-registro').scrollTop();
                         return;
 

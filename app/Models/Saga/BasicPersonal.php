@@ -11,4 +11,8 @@ class BasicPersonal extends Model
     protected $connection = 'mysql_saga';
     protected $table = 'personal_basica';
     protected $primaryKey = 'cip';
+    protected $fillable = [
+        'correo_institucional',
+        'celular_personal',
+    ];
 }

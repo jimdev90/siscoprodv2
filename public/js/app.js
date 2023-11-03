@@ -4956,7 +4956,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               me = _this;
               _context.prev = 1;
               _context.next = 4;
-              return (0,_service__WEBPACK_IMPORTED_MODULE_1__["default"])(HOST_URL).get("/search-personal", {
+              return (0,_service__WEBPACK_IMPORTED_MODULE_1__.routesApi)(HOST_URL).get("/search-personal", {
                 params: {
                   cip: me.cip
                 }
@@ -5019,42 +5019,67 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     activateUser: function activateUser() {
       var _this2 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var me, _e$response2, status, data, _data$errors, correo_institucional, celular_personal;
+        var me, response, message, _e$response2, status, data, _data$errors, correo_institucional, celular_personal, cip, unidad, nombre_completo;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
               me = _this2;
               _context2.prev = 1;
-              _context2.next = 20;
-              break;
+              _context2.next = 4;
+              return (0,_service__WEBPACK_IMPORTED_MODULE_1__.routesApp)(HOST_URL).put("/activar-usuario", me.dataEfectivo);
             case 4:
-              _context2.prev = 4;
+              response = _context2.sent;
+              console.table({
+                response: response
+              });
+              if (Object.entries(response).length !== 0) {
+                message = "Usuario activado exitosamente. Ingrese sus credenciales para acceder al sistema";
+                swal.fire({
+                  text: "".concat(message),
+                  icon: "success",
+                  buttonsStyling: true,
+                  confirmButtonText: "Ok!",
+                  customClass: {
+                    confirmButton: "btn font-weight-bold btn-light-primary"
+                  }
+                }).then(function () {
+                  window.location.href = "".concat(HOST_URL, "/");
+                });
+              }
+              _context2.next = 29;
+              break;
+            case 9:
+              _context2.prev = 9;
               _context2.t0 = _context2["catch"](1);
+              console.log(_context2.t0.response);
               if (!(Object.entries(_context2.t0.response).length !== 0)) {
-                _context2.next = 19;
+                _context2.next = 28;
                 break;
               }
               _e$response2 = _context2.t0.response, status = _e$response2.status, data = _e$response2.data;
               if (!(status === 422)) {
-                _context2.next = 16;
+                _context2.next = 25;
                 break;
               }
-              _data$errors = data.errors, correo_institucional = _data$errors.correo_institucional, celular_personal = _data$errors.celular_personal;
-              toastr.error("".concat(correo_institucional[0]), 'Lo sentimos!');
-              toastr.error("".concat(celular_personal[0]), 'Lo sentimos!');
+              _data$errors = data.errors, correo_institucional = _data$errors.correo_institucional, celular_personal = _data$errors.celular_personal, cip = _data$errors.cip, unidad = _data$errors.unidad, nombre_completo = _data$errors.nombre_completo;
+              if (cip) toastr.error("".concat(cip[0]), 'Lo sentimos!');
+              if (correo_institucional) toastr.error("".concat(correo_institucional[0]), 'Lo sentimos!');
+              if (celular_personal) toastr.error("".concat(celular_personal[0]), 'Lo sentimos!');
+              if (unidad) toastr.error("".concat(unidad[0]), 'Lo sentimos!');
+              if (nombre_completo) toastr.error("".concat(nombre_completo[0]), 'Lo sentimos!');
               $('#form-iniciar-registro').scrollTop();
               return _context2.abrupt("return");
-            case 16:
+            case 25:
               toastr.error('Comunicate con los administradores del sistema.', 'Error de Servidor!');
               $('#form-iniciar-registro').scrollTop();
               return _context2.abrupt("return");
-            case 19:
+            case 28:
               toastr.error('Comunicate con los administradores del sistema.', 'Error de Servidor!');
-            case 20:
+            case 29:
             case "end":
               return _context2.stop();
           }
-        }, _callee2, null, [[1, 4]]);
+        }, _callee2, null, [[1, 9]]);
       }))();
     },
     cancelRegister: function cancelRegister() {
@@ -5222,12 +5247,13 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   routesApi: () => (/* binding */ routesApi),
+/* harmony export */   routesApp: () => (/* binding */ routesApp)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (host_url) {
+var routesApi = function routesApi(host_url) {
   var options = {};
   options.baseURL = "".concat(host_url, "/api");
   options.headers = {
@@ -5235,7 +5261,17 @@ __webpack_require__.r(__webpack_exports__);
   };
   var instance = axios__WEBPACK_IMPORTED_MODULE_0___default().create(options);
   return instance;
-});
+};
+var routesApp = function routesApp(host_url) {
+  var options = {};
+  options.baseURL = "".concat(host_url);
+  options.headers = {
+    'accept': 'application/json'
+  };
+  var instance = axios__WEBPACK_IMPORTED_MODULE_0___default().create(options);
+  return instance;
+};
+
 
 /***/ }),
 
@@ -27493,7 +27529,6 @@ var render = function () {
                     id: "data-nombrecompleto",
                     type: "text",
                     autocomplete: "off",
-                    readonly: "",
                   },
                   domProps: { value: _vm.dataEfectivo.nombre_completo },
                   on: {
@@ -27530,9 +27565,8 @@ var render = function () {
                     (_vm.searchStatus ? "bg-success-o-30" : ""),
                   attrs: {
                     id: "data-cip",
-                    type: "text",
+                    type: "number",
                     autocomplete: "off",
-                    readonly: "",
                   },
                   domProps: { value: _vm.dataEfectivo.cip },
                   on: {
@@ -27567,7 +27601,6 @@ var render = function () {
                     id: "data-uni_sql",
                     type: "text",
                     autocomplete: "off",
-                    readonly: "",
                   },
                   domProps: { value: _vm.dataEfectivo.unidad },
                   on: {
@@ -27645,7 +27678,7 @@ var render = function () {
                     ],
                     staticClass:
                       "form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6",
-                    attrs: { type: "text", placeholder: "Numero de celular" },
+                    attrs: { type: "tel", placeholder: "Numero de celular" },
                     domProps: { value: _vm.dataEfectivo.celular_personal },
                     on: {
                       input: function ($event) {
@@ -27682,7 +27715,7 @@ var render = function () {
                         "btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mx-4",
                       attrs: { type: "submit", id: "kt_login_signup_submit" },
                     },
-                    [_vm._v("Finalizar\n            ")]
+                    [_vm._v("Activar usuario\n            ")]
                   ),
                   _vm._v(" "),
                   _c(

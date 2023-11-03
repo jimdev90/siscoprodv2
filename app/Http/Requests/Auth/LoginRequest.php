@@ -43,6 +43,7 @@ class LoginRequest extends FormRequest
             ->where('estado', 1)
             ->first();
 
+
         if (!$user || !$this->compararPassword($user->usuario_clave, $this->password)) {
             RateLimiter::hit($this->throttleKey());
             throw ValidationException::withMessages([
@@ -53,7 +54,7 @@ class LoginRequest extends FormRequest
         $validateModelHasRole = DB::table('model_has_roles')->where('model_id', $user->idusuarios)->first();
         if ($validateModelHasRole == null){
             throw ValidationException::withMessages([
-                'login' => trans('auth.noActive')
+                'login' => trans('auth.noActiveModule')
             ]);
         }
 
