@@ -50,7 +50,7 @@
 @include('layouts.common.panel_profile')
 <script>
     const HOST_URL = "{{ config('app.url') }}";
-    const URL_FOTO_PERSONAL_SAGA = {{ config('app.url_foto_saga') }};
+    const URL_FOTO_PERSONAL_SAGA = "{{ config('app.url_foto_saga') }}";
 </script>
 <script>
     const KTAppSettings = {

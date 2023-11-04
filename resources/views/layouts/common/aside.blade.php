@@ -34,7 +34,7 @@
 
 {{--                <li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body"--}}
 {{--                    data-boundary="window" title="Usuarios Registrados">--}}
-{{--                    <a href="{{ route('admin.usuarios.index') }}" class="nav-link btn btn-icon btn-lg btn-borderless">--}}
+{{--                    <a href="{{ route('role.usuarios.index') }}" class="nav-link btn btn-icon btn-lg btn-borderless">--}}
 {{--                        <span class="svg-icon svg-icon-xxl">--}}
 {{--                           <i class="fa fa-users"></i>--}}
 {{--                        </span>--}}
@@ -42,7 +42,7 @@
 {{--                </li>--}}
 {{--                <li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body"--}}
 {{--                    data-boundary="window" title="Roles del sistema">--}}
-{{--                    <a href="{{ route('admin.roles.index') }}" class="nav-link btn btn-icon btn-lg btn-borderless">--}}
+{{--                    <a href="{{ route('role.roles.index') }}" class="nav-link btn btn-icon btn-lg btn-borderless">--}}
 {{--                    <span class="svg-icon menu-icon">--}}
 {{--                           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"--}}
 {{--                                width="24px" height="24px" viewBox="0 0 24 24" version="1.1">--}}
@@ -58,7 +58,7 @@
 {{--                </li>--}}
 {{--                <li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body"--}}
 {{--                    data-boundary="window" title="Permisos del sistema">--}}
-{{--                    <a href="{{ route('admin.permisos.index') }}" class="nav-link btn btn-icon btn-lg btn-borderless">--}}
+{{--                    <a href="{{ route('role.permisos.index') }}" class="nav-link btn btn-icon btn-lg btn-borderless">--}}
 {{--                     <span class="svg-icon menu-icon">--}}
 {{--                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"--}}
 {{--                                 width="24px" height="24px" viewBox="0 0 24 24" version="1.1">--}}

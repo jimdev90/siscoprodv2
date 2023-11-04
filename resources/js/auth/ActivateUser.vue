@@ -54,7 +54,7 @@
                        type="number"
                        autocomplete="off"
                        v-model="dataEfectivo.cip"
-                       />
+                />
             </div>
 
             <div class="form-group">
@@ -64,7 +64,7 @@
                        type="text"
                        autocomplete="off"
                        v-model="dataEfectivo.unidad"
-                       />
+                />
             </div>
 
             <div class="form-group">
@@ -105,7 +105,8 @@
 
 <script>
 import MessageError from "../components/MessageError.vue";
-import { routesApi, routesApp } from "../service";
+import {routesApi, routesApp} from "../service";
+
 export default {
     name: 'ActivateUser',
     components: {MessageError},
@@ -130,11 +131,16 @@ export default {
         async searchPersonal() {
             let me = this;
             try {
-                const response = await routesApi(HOST_URL).get(`/search-personal`, { params: { cip: me.cip } });
-                if (Object.entries(response).length !== 0){
+                const response = await routesApi(HOST_URL).get(`/search-personal`, {params: {cip: me.cip}});
+                if (Object.entries(response).length !== 0) {
                     me.searchStatus = true;
                     me.cip = '';
-                    const {basic_personal_data: {celular_personal, correo_institucional}, nombre, unidad, idusuarios} = response.data.data;
+                    const {
+                        basic_personal_data: {celular_personal, correo_institucional},
+                        nombre,
+                        unidad,
+                        idusuarios
+                    } = response.data.data;
                     me.dataEfectivo = {
                         cip: idusuarios,
                         nombre_completo: nombre,
@@ -142,27 +148,27 @@ export default {
                         celular_personal: celular_personal,
                         unidad: unidad
                     };
-                }else {
+                } else {
                     toastr.error('Comunicate con los administradores del sistema.', 'Error de Servidor!')
                 }
-            }catch (e) {
-                if (Object.entries(e.response).length !== 0){
-                   const {status, data} = e.response;
-                   if (status === 422){
+            } catch (e) {
+                if (Object.entries(e.response).length !== 0) {
+                    const {status, data} = e.response;
+                    if (status === 422) {
                         const {errors: {cip}} = data;
-                       toastr.error(`${cip[0]}`, 'Lo sentimos!')
-                       return;
+                        toastr.error(`${cip[0]}`, 'Lo sentimos!')
+                        return;
 
-                   }else if(status === 404) {
-                       toastr.error('El número de CIP no existe o su cuenta ha sido desactivada.', 'Lo sentimos!')
-                       $('#form-iniciar-registro').scrollTop();
-                       me.cip = '';
-                       return;
-                   } else {
-                       toastr.error('Comunicate con los administradores del sistema.', 'Error de Servidor!')
-                       $('#form-iniciar-registro').scrollTop();
-                       return;
-                   }
+                    } else if (status === 404) {
+                        toastr.error('El número de CIP no existe o su cuenta ha sido desactivada.', 'Lo sentimos!')
+                        $('#form-iniciar-registro').scrollTop();
+                        me.cip = '';
+                        return;
+                    } else {
+                        toastr.error('Comunicate con los administradores del sistema.', 'Error de Servidor!')
+                        $('#form-iniciar-registro').scrollTop();
+                        return;
+                    }
                 }
                 toastr.error('Comunicate con los administradores del sistema.', 'Error de Servidor!')
             }
@@ -173,7 +179,7 @@ export default {
             try {
                 const response = await routesApp(HOST_URL).put(`/activar-usuario`, me.dataEfectivo)
                 console.table({response});
-                if (Object.entries(response).length !== 0){
+                if (Object.entries(response).length !== 0) {
                     const message = `Usuario activado exitosamente. Ingrese sus credenciales para acceder al sistema`;
                     swal.fire({
                         text: `${message}`,
@@ -187,11 +193,11 @@ export default {
                         window.location.href = `${HOST_URL}/`;
                     });
                 }
-            }catch (e) {
+            } catch (e) {
                 console.log(e.response)
-                if (Object.entries(e.response).length !== 0){
+                if (Object.entries(e.response).length !== 0) {
                     const {status, data} = e.response;
-                    if (status === 422){
+                    if (status === 422) {
                         const {errors: {correo_institucional, celular_personal, cip, unidad, nombre_completo}} = data;
                         if (cip) toastr.error(`${cip[0]}`, 'Lo sentimos!');
                         if (correo_institucional) toastr.error(`${correo_institucional[0]}`, 'Lo sentimos!');

@@ -21,6 +21,7 @@ window.Vue = require('vue').default;
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('activate-user', require('./auth/ActivateUser.vue').default);
+Vue.component('table-roles', require('./app/role/TableRoles.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

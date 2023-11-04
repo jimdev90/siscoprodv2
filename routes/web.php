@@ -24,3 +24,4 @@ Route::get('/dashboard', [DashboardController:: class, 'index'])->name('dashboar
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/profile.php';
+require __DIR__ . '/admin.php';
