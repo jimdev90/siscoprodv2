@@ -1,9 +1,8 @@
 <template>
     <div class="card-body">
-        <button class="btn btn-warning" id="btn-open-modal-register-role" @click="$vm2.open('modal-2')">Añadir Rol
+        <button class="btn btn-warning" id="btn-open-modal-register-role" @click="$vm2.open('modal-2')">Añadir Permiso
         </button>
-        <table class="table table-bordered table-hover table-checkable" id="kt_datatable"
-               style="margin-top: 13px !important">
+        <table class="table table-bordered table-hover table-checkable" id="kt_datatable" style="margin-top: 13px !important">
             <thead>
             <tr>
                 <th>#</th>
@@ -11,45 +10,38 @@
                 <th>Descripción</th>
                 <th>Guard</th>
                 <th>Fecha de creación</th>
-                <th>Permisos</th>
                 <th>Acciones</th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(role, index) in listRoles" :key="index">
-                <td>{{ index + 1 }}</td>
-                <td>{{ role.name }}</td>
-                <td>{{ role.description }}</td>
-                <td>{{ role.guard_name }}</td>
-                <td>{{ role.created_at }}</td>
-                <td>
-                    <div v-if="role.permissions && role.permissions.length > 0">
-                        <span class="badge badge-info m-1"
-                              v-for="permission in role.permissions">{{ permission.description }}</span>
-                    </div>
-                    <span v-else class="badge badge-danger">No se asignaron permisos</span>
-                </td>
-                <td nowrap="nowrap">
-                    <a @click="editRole(role)" class="btn btn-sm btn-clean btn-icon mr-2" title="Editar rol">
+                <tr v-for="(permission, index) in listPermissions" :key="index">
+                    <td>{{ index +1 }}</td>
+                    <td>{{ permission.name }}</td>
+                    <td>{{ permission.description }}</td>
+                    <td>{{ permission.guard_name }}</td>
+                    <td>{{ permission.created_at }}</td>
+                    <td nowrap="nowrap">
+                        <a @click="editPermission(permission)" class="btn btn-sm btn-clean btn-icon mr-2" title="Editar rol">
                         <span class="svg-icon svg-icon-md">
                             <i class="fa fa-edit"></i>
                         </span>
-                    </a>
-                    <a @click="deleteRole(role)" class="btn btn-sm btn-clean btn-icon" title="Eliminar rol">
+                        </a>
+                        <a @click="deletePermission(permission)" class="btn btn-sm btn-clean btn-icon" title="Eliminar rol">
                         <span class="svg-icon svg-icon-md">
                              <i class="fa fa-trash"></i>
                         </span>
-                    </a>
-                </td>
-            </tr>
+                        </a>
+                    </td>
+                </tr>
             </tbody>
         </table>
+
         <modal-vue
             @on-close="$vm2.close('modal-2')"
             name="modal-2"
             modalSize="lg"
             :headerOptions="{
-                title: stateEdit ? 'Editar rol' : 'Registrar rol',
+                title: stateEdit ? 'Editar permiso' : 'Registrar permiso',
             }"
             :footerOptions="{
                 btn1: 'Cancelar',
@@ -62,7 +54,7 @@
                     $vm2.close('modal-2');
                 },
                 btn2OnClick: () => {
-                  stateEdit ? updateRole() :createRole();
+                  stateEdit ? updatePermission() :createPermission();
                 },
 
             }"
@@ -81,26 +73,8 @@
                            class="form-control form-control-solid"
                            name="description" v-model="data.description"/>
                 </div>
-                <div class="form-group validated">
-                    <label>Permisos para este Rol (*): </label>
-                    <div class="checkbox-list">
-                        <label class="checkbox" v-for="(permission, index) in listPermissions"
-                               :key="index">
-                            <input
-                                type="checkbox"
-                                v-model="data.permissions"
-                                :value="permission.id"
-                                :checked="true"
-                            />
-                            <span></span>
-                            {{ permission.description }}
-                        </label>
-                    </div>
-                </div>
             </form>
-
         </modal-vue>
-
     </div>
 </template>
 
@@ -108,37 +82,33 @@
 import {routesApi, routesApp} from "../../service";
 
 export default {
-    name: 'TableRoles',
-    props: ['permissions'],
+    name: 'TablePermissions',
     data() {
         return {
-            listRoles: [],
             listPermissions: [],
             data: {
                 id: '',
                 name: '',
                 description: '',
-                permissions: []
             },
             errors: {
                 name: '',
                 description: '',
-                permissions: ''
             },
             stateEdit: false
         }
     },
     mounted() {
-        this.getRoles();
-        this.listPermissions = this.permissions;
+        this.getPermissions();
     },
+
     methods: {
-        async getRoles() {
+        async getPermissions() {
             let me = this;
             try {
-                const response = await routesApi(HOST_URL).get(`/roles`)
+                const response = await routesApi(HOST_URL).get(`/permisos`)
                 if (Object.entries(response).length !== 0) {
-                    me.listRoles = response.data.data
+                    me.listPermissions = response.data.data
                 }
             } catch (e) {
                 console.log(e.response)
@@ -155,13 +125,13 @@ export default {
                 toastr.error('Comunicate con los administradores del sistema.', 'Error de Servidor!')
             }
         },
-        async createRole() {
-            let me = this;
+
+        async createPermission(){
+          let me = this;
             try {
-                const response = await routesApp(HOST_URL).post(`/roles`, {
+                const response = await routesApp(HOST_URL).post(`/permisos`, {
                     name: me.data.name,
                     description: me.data.description,
-                    permissions: me.data.permissions
                 })
                 console.log(response);
                 if (Object.entries(response).length !== 0 && response.status === 200) {
@@ -169,18 +139,15 @@ export default {
                     me.clearFormData();
                     me.$vm2.close('modal-2');
                     toastr.success(`${response.data}`, 'Felicitaciones!!');
-                    await me.getRoles();
+                    await me.getPermissions();
                 }
             } catch (e) {
-                console.log(e.response)
-
                 if (Object.entries(e.response).length !== 0) {
                     const {status, data} = e.response;
                     if (status === 422) {
-                        const {errors: {name, description, permissions}} = data;
+                        const {errors: {name, description}} = data;
                         if (name) this.showMessageError(name, 'name')
                         if (description) this.showMessageError(description, 'description')
-                        if (permissions) this.showMessageError(permissions, 'permissions')
                         return;
 
                     } else {
@@ -192,14 +159,14 @@ export default {
                 toastr.error('Comunicate con los administradores del sistema.', 'Error de Servidor!')
             }
         },
-        async updateRole() {
-            let me = this;
+
+        async updatePermission(){
+          let me = this;
             try {
-                const response = await routesApp(HOST_URL).put(`/roles/${me.data.id}`, {
+                const response = await routesApp(HOST_URL).put(`/permisos/${me.data.id}`, {
                     id: me.data.id,
                     name: me.data.name,
                     description: me.data.description,
-                    permissions: me.data.permissions
                 })
                 console.log(response);
                 if (Object.entries(response).length !== 0 && response.status === 200) {
@@ -208,18 +175,15 @@ export default {
                     me.clearFormData();
                     me.$vm2.close('modal-2');
                     toastr.success(`${response.data}`, 'Felicitaciones!!');
-                    await me.getRoles();
+                    await me.getPermissions();
                 }
             } catch (e) {
-                console.log(e.response)
-
                 if (Object.entries(e.response).length !== 0) {
                     const {status, data} = e.response;
                     if (status === 422) {
-                        const {errors: {name, description, permissions}} = data;
+                        const {errors: {name, description}} = data;
                         if (name) this.showMessageError(name, 'name')
                         if (description) this.showMessageError(description, 'description')
-                        if (permissions) this.showMessageError(permissions, 'permissions')
                         return;
 
                     } else {
@@ -231,11 +195,21 @@ export default {
                 toastr.error('Comunicate con los administradores del sistema.', 'Error de Servidor!')
             }
         },
-        deleteRole(role){
+
+        editPermission(permission) {
+            let me = this;
+            me.clearErrorsForm();
+            me.stateEdit = true;
+            me.$vm2.open('modal-2');
+            me.data.id = permission.id;
+            me.data.name = permission.name;
+            me.data.description = permission.description;
+        },
+        deletePermission(permission){
             let me = this;
             swal.fire({
-                title: `¿Desea eliminar el rol ${role.name}?`,
-                text: `Eliminar un rol es permanente. No es posible deshacer la operación. ¿Desea continuar?`,
+                title: `¿Desea eliminar el permiso ${permission.name}?`,
+                text: `Eliminar un permiso es permanente. No es posible deshacer la operación. ¿Desea continuar?`,
                 icon: "warning",
                 showCloseButton: true,
                 showCancelButton: true,
@@ -243,29 +217,13 @@ export default {
                 cancelButtonText: "Cancelar",
             }).then(async function (result) {
                 if (result.value) {
-                    const response = await routesApp(HOST_URL).delete(`/roles/${role.id}`)
+                    const response = await routesApp(HOST_URL).delete(`/permisos/${permission.id}`)
                     if (Object.entries(response).length !== 0 && response.status === 200) {
                         toastr.success(`${response.data}`, 'Felicitaciones!!');
-                        await me.getRoles();
+                        await me.getPermissions();
                     }
                 }
             });
-        },
-        editRole(role) {
-            console.log({role})
-            let me = this;
-            me.clearErrorsForm();
-            me.data.permissions = [];
-            me.stateEdit = true;
-            me.$vm2.open('modal-2');
-            me.data.id = role.id;
-            me.data.name = role.name;
-            me.data.description = role.description;
-            role.permissions.forEach(permission => {
-                console.log({permission})
-                me.data.permissions.push(permission.id);
-            })
-
         },
 
         showMessageError(value, key) {
@@ -276,13 +234,11 @@ export default {
         clearErrorsForm() {
             this.errors.name = '';
             this.errors.description = '';
-            this.permissions = []
         },
         clearFormData() {
             this.data.id='';
             this.data.name = '';
             this.data.description = '';
-            this.data.permissions = [];
         }
     }
 }
@@ -291,3 +247,5 @@ export default {
 <style scoped>
 
 </style>
+<script setup>
+</script>

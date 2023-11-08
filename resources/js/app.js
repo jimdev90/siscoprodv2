@@ -7,6 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue').default;
+import Modal from '@burhanahmeed/vue-modal-2';
 
 /**
  * The following block of code may be used to automatically register your
@@ -22,6 +23,10 @@ window.Vue = require('vue').default;
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('activate-user', require('./auth/ActivateUser.vue').default);
 Vue.component('table-roles', require('./app/role/TableRoles.vue').default);
+Vue.component('table-permissions', require('./app/permission/TablePermission.vue').default);
+Vue.use(Modal, {
+    componentName: 'ModalVue',
+});
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

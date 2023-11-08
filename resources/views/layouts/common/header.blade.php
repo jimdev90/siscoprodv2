@@ -122,7 +122,7 @@
 {{--                                </ul>--}}
 {{--                            </div>--}}
 {{--                        </li>--}}
-                        @if(auth()->user()->isAdministrator())
+{{--                        @if(auth()->user()->isAdministrator())--}}
                             <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click"
                             aria-haspopup="true">
                             <a href="javascript:;" class="menu-link menu-toggle">
@@ -141,7 +141,7 @@
                                         </a>
                                     </li>
                                     <li class="menu-item" aria-haspopup="true">
-                                        <a href="{{ route('role.role.index') }}" class="menu-link">
+                                        <a href="{{ route('admin.role.index') }}" class="menu-link">
                                            <span class="svg-icon menu-icon">
                                                   <i class="fa fa-universal-access"></i>
                                            </span>
@@ -149,7 +149,7 @@
                                         </a>
                                     </li>
                                     <li class="menu-item" aria-haspopup="true">
-                                        <a href="#" class="menu-link">
+                                        <a href="{{ route('admin.permission.index') }}" class="menu-link">
                                            <span class="svg-icon menu-icon">
                                                   <i class="fa fa-key"></i>
                                            </span>
@@ -159,7 +159,7 @@
                                 </ul>
                             </div>
                         </li>
-                        @endif
+{{--                        @endif--}}
                     </ul>
                 </div>
             </div>
